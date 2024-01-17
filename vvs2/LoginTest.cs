@@ -21,8 +21,9 @@ public class LoginTest
     public void SetUp()
     {
         driver = new ChromeDriver();
-        js = (IJavaScriptExecutor)driver;
-        vars = new Dictionary<string, object>();
+        
+        driver.Navigate().GoToUrl("https://buybook.ba/");
+       
     }
     [TearDown]
     protected void TearDown()
@@ -32,13 +33,19 @@ public class LoginTest
     [Test]
     public void login()
     {
+       
         driver.Navigate().GoToUrl("https://buybook.ba/");
-        driver.Manage().Window.Size = new System.Drawing.Size(784, 824);
+        Thread.Sleep(3000);
         driver.FindElement(By.CssSelector(".bi-person-circle")).Click();
+       
         driver.FindElement(By.Id("email_1")).Click();
+       
         driver.FindElement(By.Id("email_1")).SendKeys("ahodzic1@etf.unsa.ba");
         driver.FindElement(By.Id("exampleInputPassword01")).Click();
         driver.FindElement(By.Id("exampleInputPassword01")).SendKeys("malena122");
+  
         driver.FindElement(By.Name("giris")).Click();
+   
+        Assert.That(driver.FindElement(By.CssSelector(".alert")).Text, Is.EqualTo("Uspješno ste prijavljeni. Preusmjereni ste na početnu stranicu."));
     }
 }
